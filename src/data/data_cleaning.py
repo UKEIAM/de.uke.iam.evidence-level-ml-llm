@@ -16,6 +16,7 @@ df = pd.read_csv(
     sep="\t",
 )
 
+# Remove entries with missing abstracts
 df = df[df["abstract_fetched"].notna()]
 
 # Drop duplicates based on 'reference_id'
