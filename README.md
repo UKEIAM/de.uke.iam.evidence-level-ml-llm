@@ -1,23 +1,19 @@
-# Project template: GPU
-This repository represents a blueprint for Python projects using pyTorch optimized with NVIDIA GPUs. The image pre-install the following software components:
+# Evidence level grader using LLMs and Machine Learning
 
-- Python 3.10
-- Anaconda with a default environment
-    - pyTorch
-    - Linter for appropiate code standards (and config files for reasonable defaults)
-        - flake8
-        - pyLint
-- NVIDIA toolchain
-    - CUDA
-    - cuBLAS
-    - NVIDIA cuDNN
-    - NVIDIA NCCL (optimized for NVLink)
-    - RAPIDS
-    - NVIDIA Data Loading Library (DALI)
-    - TensorRT
-    - Torch-TensorRT
+# Project structure
+Here is a brief overview of the project structure:
 
-## Usage
-Specify the packages you require in the *requirements.txt*. More complex environment customization goes into *Dockerfile*.
+- data/: used to store raw and preprocessed CIViC data (.csv)
+- src/: scripts for data spliting and preprocessing, machine learning models training, i.e., xgboost and decision tree, and LLMs inference for classification of evidence level
+- runs/: used to store output data from src/ (e.g., dataframes and visualizations from models performance evaluation)
 
-While using Visual Studio Code for development is encouraged, the image does not depend on this IDE in any way. As a side effect, its required server components are not even installed by default if the Dockerfile in root is built manually. Opening the project in VS Code will set the proper default and configure everything appropriately. Alternatively, build the container with `docker build -t <YOUR PROJECT NAME>:0.1 .` and run the container with `docker run -p <YOUR LOCAL PORT>:22 --rm --gpus all <YOUR PROJECT NAME>:0.1`.
+# Installation instructions
+Create a .env file with your OpenAI and Gemini API keys following this format:
+
+``` 
+OPENAI_API_KEY='yourkey'
+GEMINI_API_KEY='yourkey'
+```
+
+
+
