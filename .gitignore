@@ -4,7 +4,13 @@
 
 # Ignore data files
 data/preprocessed/
-runs/data/
+runs/data/*.csv
+runs/data/*.png
+
+# Ignore trained models
+runs/xgb/*.json
+runs/dt/*.pkl
+
 ### JupyterNotebooks ###
 # gitignore template for Jupyter Notebooks
 # website: http://jupyter.org/
