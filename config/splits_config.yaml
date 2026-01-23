@@ -1,8 +1,6 @@
 split_seed: 42
-
 train_size: 0.8
 test_size: 0.2
-
 splits_saving_path: runs/data # where to store the splits and visualizations of the splits distribution
 
 

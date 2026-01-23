@@ -1,5 +1,4 @@
 raw_csv_path: data/raw/civic_data.csv
-
 preprocessed_path: data/preprocessed
 preprocessed_filename: civic_data_preprocessed.csv
 

@@ -1,0 +1,44 @@
+data:
+  train_path: runs/data/train_dataset.csv
+  test_path: runs/data/test_dataset.csv
+  label_column: evidence_level
+  text_column: text
+
+# Configuration for different model runs
+llm:
+  gpt_model: gpt-4.1-mini-2025-04-14
+  gemini_model: gemini-2.5-flash
+  structured_output: true
+  temperature: 0.2
+  evaluation_output_dir: runs/llm
+
+dt:
+  criterion: gini
+  min_samples_split: 5
+  max_depth: 5
+  class_weight: balanced
+  random_state: 42
+  model_output_dir: runs/dt
+
+xgb:
+  name: xgboost_model
+  objective: multi:softprob
+  n_estimators: 300
+  max_depth: 6
+  learning_rate: 0.05
+  subsample: 0.8
+  tree_method: hist
+  colsample_bytree: 0.8
+  eval_metric: mlogloss
+  random_state: 42
+  model_output_dir: runs/xgb
+
+# Configuration for input type specific preprocessing
+embedding:
+  model: neuml/pubmedbert-base-embeddings
+  batch_size: 16
+  max_length: 512
+
+tfidf:
+  max_features: 5000
+  ngram_range: [1, 2]
