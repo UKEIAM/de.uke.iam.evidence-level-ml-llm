@@ -2,6 +2,9 @@ import sys
 import os
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+from evaluation.save_cm import save_confusion_matrix
+from evaluation.metrics import compute_performance_metrics, save_performance_metrics
+from evaluation.save_test_preds import save_test_predictions
 import yaml
 from utils.load_datasets import load_tfidf_features, load_splits
 from sklearn.utils.class_weight import compute_sample_weight
@@ -30,15 +33,44 @@ weights = compute_sample_weight(class_weight="balanced", y=train_labels_df["labe
 trainer = DecisionTreeTrainer()
 # Train the model
 model = trainer.train(X_train, y_train)
-# Evaluate the model (print classification report)
-trainer.evaluate(model, X_test, y_test)
-# Save the model
-timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-model_filename = f"dt_model_{timestamp}.json"
 
-# Ensure output directory exists
+# --- Evaluate model on test data ---
+y_pred = model.predict(X_test)
+
+# Directories for saving outputs
 output_dir = runs_config["dt"]["output_dir"]
 os.makedirs(output_dir, exist_ok=True)
+timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+run_name = runs_config.get("tfidf", {}).get("run_name", "")
 
+# Save model
+model_filename = f"dt_{run_name}_model_{timestamp}.json"
 model_path = os.path.join(runs_config["dt"]["output_dir"], model_filename)
 trainer.save_model(model, model_path)
+
+# Save predictions
+output_preds_path = os.path.join(
+    runs_config["dt"]["output_dir"], f"dt_{run_name}_predictions_{timestamp}.csv"
+)
+save_test_predictions(y_pred=y_pred, y_test=y_test, output_path=output_preds_path)
+
+# Save confusion matrix
+cm_path = os.path.join(
+    runs_config["dt"]["output_dir"],
+    f"dt_{run_name}_confusion_matrix_{timestamp}.png",
+)
+save_confusion_matrix(
+    y_test=y_test,
+    y_pred=y_pred,
+    output_path=cm_path,
+)
+
+metrics = compute_performance_metrics(y_true=y_test, y_pred=y_pred)
+metrics_path = os.path.join(
+    runs_config["dt"]["output_dir"],
+    f"dt_{run_name}_performance_metrics_{timestamp}.txt",
+)
+save_performance_metrics(metrics=metrics, output_path=metrics_path)
+
+# Print classification report
+trainer.evaluate(y_pred=y_pred, y_test=y_test)
