@@ -52,7 +52,7 @@ class LLMClassifier:
                         self.schema,
                         self.runs_config["llm"]["temperature"],
                     )
-                    llm_output_dict = json.loads(llm_output_json)
+                    results.append(json.loads(llm_output_json))
                     break  # Exit retry loop on success
                 except ServiceUnavailable:
                     print(
