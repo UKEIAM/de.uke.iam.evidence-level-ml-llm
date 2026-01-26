@@ -35,12 +35,11 @@ class XGBTrainer:
         print("XGBoost model training completed.")
         return model
 
-    def evaluate(self, model, X_test, y_test):
+    def evaluate(self, y_test, y_pred):
         """Shared xgb evaluation logic"""
         le = LabelEncoder()
         le.fit(y_test)
 
-        y_pred = model.predict(X_test)
         print(
             classification_report(
                 le.inverse_transform(y_test), le.inverse_transform(y_pred)
@@ -71,9 +70,8 @@ class DecisionTreeTrainer:
         model.fit(X_train, y_train)
         return model
 
-    def evaluate(self, model, X_test, y_test):
+    def evaluate(self, y_test, y_pred):
         """Shared evaluation logic"""
-        y_pred = model.predict(X_test)
         print(classification_report(y_test, y_pred))
         print("Evaluation completed.")
 
