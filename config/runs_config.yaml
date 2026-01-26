@@ -8,6 +8,7 @@ data:
 llm:
   structured_output: true
   temperature: 0.2
+  max_retries: 3
   gpt:
     model: gpt-4.1-mini-2025-04-14
     output_dir: runs/gpt
