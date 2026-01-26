@@ -23,7 +23,9 @@ with open("config/data_config.yaml", "r") as f:
     data_config = yaml.safe_load(f)
 
 df_clean = pd.read_csv(
-    data_config["preprocessed_csv_path"],
+    os.path.join(
+        data_config["preprocessed_path"], data_config["preprocessed_filename"]
+    ),
     sep="\t",
 )
 

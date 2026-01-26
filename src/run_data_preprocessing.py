@@ -31,5 +31,5 @@ if __name__ == "__main__":
     run_script("src/data/splits.py")
 
     # Step 3: TF-IDF Vectorization
-    run_script("src/data/tfidf_vectorization.py")
+    run_script("src/features/tfidf_vectorization.py")
     print("📚 Data preprocessing pipeline completed.")
