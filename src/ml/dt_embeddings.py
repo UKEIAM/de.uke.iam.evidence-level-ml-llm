@@ -13,6 +13,7 @@ import yaml
 import os
 from datetime import datetime
 
+print("Starting Decision Tree with embeddings features training and evaluation...")
 with open("config/runs_config.yaml", "r") as f:
     runs_config = yaml.safe_load(f)
 
@@ -77,3 +78,6 @@ save_performance_metrics(metrics=metrics, output_path=metrics_path)
 
 # Print classification report
 trainer.evaluate(y_pred=y_pred, y_test=y_test)
+print(
+    "===== 📚 Decision tree with embeddings features training and evaluation completed.===== "
+)
