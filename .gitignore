@@ -10,6 +10,7 @@ runs/data/*.png
 # Ignore trained models
 runs/xgb/*
 runs/dt/*
+runs/*.py
 
 ### JupyterNotebooks ###
 # gitignore template for Jupyter Notebooks
