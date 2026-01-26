@@ -37,7 +37,7 @@ xgb:
   output_dir: runs/xgb
 
 # Configuration for input type specific preprocessing
-embedding:
+embeddings:
   run_name: embedding 
   model: neuml/pubmedbert-base-embeddings
   batch_size: 16
