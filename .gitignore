@@ -8,8 +8,8 @@ runs/data/*.csv
 runs/data/*.png
 
 # Ignore trained models
-runs/xgb/*.json
-runs/dt/*.pkl
+runs/xgb/*
+runs/dt/*
 
 ### JupyterNotebooks ###
 # gitignore template for Jupyter Notebooks
