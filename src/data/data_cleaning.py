@@ -19,11 +19,11 @@ df = pd.read_csv(
 # Remove entries with missing abstracts
 df = df[df["abstract_fetched"].notna()]
 
-# Drop duplicates based on 'reference_id'
+# Create text column by combining title and abstract
 df["text"] = df["title_fetched"] + " " + df["abstract_fetched"].str.strip()
 
 # Keep only relevant columns
-df = df[["reference_id", "text", "evidence_level"]]
+df = df[["reference_id", "text", "evidence_level", "title_fetched", "abstract_fetched"]]
 print(
     f"Cleaned data has {len(df)} entries after removing missing abstracts and duplicates."
 )
