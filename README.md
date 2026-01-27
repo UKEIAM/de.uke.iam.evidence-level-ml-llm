@@ -1,13 +1,15 @@
 # Evidence level grader using LLMs and Machine Learning
+This repository explores the automated classification of clinical evidence levels for cancer variants using data from the Clinical Interpretation of Variants in Cancer (CIViC) knowledgebase. The study compares two state-of-the-art large language models (GPT-4.1-mini and Gemini-2.5-Flash) with two machine learning approaches (decision trees and XGBoost) for classifying publications according to CIViC evidence levels. One- and few-shot prompting strategies are evaluated for LLMs, while TF-IDF and word embedding representations are assessed for traditional ML models. Overall, the project aims to support precision oncology by accelerating variant interpretation and aiding clinical decision-making.
+
 
 ## Project structure
 Here is a brief overview of the project structure:
 
-- config/: used to control input and output directories, hyperparameters, dataset split ratios, base models for embeddings and LLM models
-- data/: used to store raw and preprocessed CIViC data (.csv)
-- src/: scripts for data spliting and preprocessing, machine learning models training, i.e., xgboost (xgb) and decision tree (dt), and LLMs (gemini, gpt) inference for classification of evidence level
-    - src/utils/prompts.py: stores prompts wrappers for one- and few-shot inferences. 
-- runs/: used to store output data from src/ (e.g., confusino matrix, performance metrics, trained models, predictions)
+- **config/**: used to control input and output directories, hyperparameters, dataset split ratios, base models for embeddings and LLM models
+- **data/**: used to store raw and preprocessed CIViC data (.csv)
+- **src/**: scripts for data spliting and preprocessing, machine learning models training, i.e., xgboost (xgb) and decision tree (dt), and LLMs (gemini, gpt) inference for classification of evidence level
+    - **src/utils/prompts.py**: stores prompts wrappers for one- and few-shot inferences. 
+- **runs/**: used to store output data from src/ (e.g., confusino matrix, performance metrics, trained models, predictions)
 
 ## Setup and Installation
 
@@ -42,30 +44,30 @@ pip install -r requirements.txt
 **Note:** The project requires PyTorch with CUDA 12.1 support. For CPU-only or different CUDA versions, modify the torch installation URL accordingly.
 
 ### Define API keys
-If you plan to run LLM inferences, create a .env file with your OpenAI and Gemini API keys following this format:
+If you plan to run LLM inferences, create a `.env` file with your OpenAI and Gemini API keys following this format:
 
-``` 
+```py
 OPENAI_API_KEY='yourkey'
 GEMINI_API_KEY='yourkey'
 ```
 
 ### Usage
 1. First, perform the data preprocessing pipeline: 
-```
+```py
 python src/run_data_preprocessing.py
 ```
-To modify input and output directories, change config/data_config.yaml accordingly. config/splits_config.py can be modified for changing split ratios, output directories and seed.
+To modify input and output directories, change `config/data_config.yaml` accordingly. `config/splits_config.py` can be modified for changing split ratios, output directories and seed.
 
 2. To train all ML models (xgb, dt) with both feature representations (TF-IDF, embeddings), and store performance reports run: 
-```
+```py
 python src/run_ml_models_training.py
 ```
-To modify hyperparameters, base models and directories, change runs_config.yaml accordingly 
+To modify hyperparameters, base models and directories, change `runs_config.yaml` accordingly 
 3. To infer LLMs (GPT, Gemini) and store performance reports, run:
-```
+```py
 python src/llm/gpt.py
 ``` 
-or
-```
+and
+``` py
 python src/llm/gemini.py
 ```
