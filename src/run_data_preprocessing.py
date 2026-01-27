@@ -24,6 +24,10 @@ def run_script(script_path):
 
 
 if __name__ == "__main__":
+    # Step 1: Fetch CIViC Data
+    print("🚀 Starting data preprocessing pipeline...")
+    run_script("src/data/fetch_civic_data.py")
+
     # Step 1: Data Cleaning
     run_script("src/data/data_cleaning.py")
 
