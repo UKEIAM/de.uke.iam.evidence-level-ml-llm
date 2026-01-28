@@ -6,7 +6,7 @@ def system_prompt():
     return "You are a researcher that has experience on assessing the evidence level of publications."
 
 
-def user_prompt_one_shot(title, abstract):
+def user_prompt_zero_shot(title, abstract):
     return f"""Analyse the title and abstract from a biomedical publication below within brackets:
     Title: "{title}"
     Abstract: "{abstract}"
@@ -29,7 +29,7 @@ def user_prompt_one_shot(title, abstract):
 
 
 def user_prompt_few_shot(title, abstract, train_dataset):
-    one_shot = user_prompt_one_shot(title, abstract)
+    zero_shot = user_prompt_zero_shot(title, abstract)
 
     # Few-shot examples selected from training dataset
     # Here we provide 5 examples, one for each evidence level
@@ -90,7 +90,7 @@ def user_prompt_few_shot(title, abstract, train_dataset):
     "confidence": "high"
     }}
     """
-    return one_shot + "\n" + few_shot
+    return zero_shot + "\n" + few_shot
 
 
 def gpt_prompt(
@@ -99,12 +99,12 @@ def gpt_prompt(
     """GPT-specific prompt wrapper."""
 
     # Generate content with the adapted parameters
-    if user_prompt_type == "one_shot":
-        user_prompt = user_prompt_one_shot(title, abstract)
+    if user_prompt_type == "zero_shot":
+        user_prompt = user_prompt_zero_shot(title, abstract)
     elif user_prompt_type == "few_shot":
         user_prompt = user_prompt_few_shot(title, abstract, None)
     else:
-        raise ValueError("Invalid user_prompt_type. Choose 'one_shot' or 'few_shot'.")
+        raise ValueError("Invalid user_prompt_type. Choose 'zero_shot' or 'few_shot'.")
 
     response = client.chat.completions.create(
         model=model,
@@ -123,12 +123,12 @@ def gemini_prompt(title, abstract, client, model, user_prompt_type, temperature)
     """Gemini-specific prompt wrapper."""
 
     # Generate content with the adapted parameters
-    if user_prompt_type == "one_shot":
-        contents = user_prompt_one_shot(title, abstract)
+    if user_prompt_type == "zero_shot":
+        contents = user_prompt_zero_shot(title, abstract)
     elif user_prompt_type == "few_shot":
         contents = user_prompt_few_shot(title, abstract, None)
     else:
-        raise ValueError("Invalid user_prompt_type. Choose 'one_shot' or 'few_shot'.")
+        raise ValueError("Invalid user_prompt_type. Choose 'zero_shot' or 'few_shot'.")
 
     response = client.models.generate_content(
         model=model,

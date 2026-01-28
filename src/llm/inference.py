@@ -19,13 +19,13 @@ class LLMClassifier:
         self.runs_config = runs_config
         self.max_retries = max_retries
 
-    def classify_dataset(self, df, prompt_type="one_shot"):
+    def classify_dataset(self, df, prompt_type="zero_shot"):
         """
         Classify all rows in a DataFrame.
 
         Args:
             df: DataFrame with 'title_fetched' and 'abstract_fetched' columns
-            prompt_type: 'one_shot' or 'few_shot'
+            prompt_type: 'zero_shot' or 'few_shot'
 
         Returns:
             DataFrame with added columns: llm_pred, llm_explanation, llm_confidence

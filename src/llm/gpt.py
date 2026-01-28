@@ -37,11 +37,11 @@ classifier = LLMClassifier(
     max_retries=max_retries,
 )
 
-# Run one-shot inference
-print("Running one-shot inference...")
-one_shot_results = classifier.classify_dataset(test_df, prompt_type="one_shot")
+# Run zero-shot inference
+print("Running zero-shot inference...")
+zero_shot_results = classifier.classify_dataset(test_df, prompt_type="zero_shot")
 classifier.save_results(
-    one_shot_results, runs_config["llm"]["gpt"]["output_dir"], "one_shot"
+    zero_shot_results, runs_config["llm"]["gpt"]["output_dir"], "zero_shot"
 )
 
 # Run few-shot inference
@@ -61,14 +61,14 @@ timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
 # Prepare labels
 le = LabelEncoder()
-y_pred_one_shot = le.fit_transform(one_shot_results["llm_pred"])
+y_pred_zero_shot = le.fit_transform(zero_shot_results["llm_pred"])
 y_pred_few_shot = le.transform(few_shot_results["llm_pred"])
 y_test = le.transform(test_df["evidence_level"])
 
 # Save confusion matrices
-run_names = ["one_shot", "few_shot"]
+run_names = ["zero_shot", "few_shot"]
 
-for run_name, y_pred in zip(run_names, [y_pred_one_shot, y_pred_few_shot]):
+for run_name, y_pred in zip(run_names, [y_pred_zero_shot, y_pred_few_shot]):
     # Save confusion matrix
     cm_path = os.path.join(
         runs_config["llm"]["gpt"]["output_dir"],
