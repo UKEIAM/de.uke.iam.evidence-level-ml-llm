@@ -9,7 +9,7 @@ Here is a brief overview of the project structure:
 - **data/**: used to store raw and preprocessed CIViC data (.csv)
 - **src/**: scripts for data spliting and preprocessing, machine learning models training, i.e., xgboost (xgb) and decision tree (dt), and LLMs (gemini, gpt) inference for classification of evidence level
     - **src/utils/prompts.py**: stores prompts wrappers for one- and few-shot inferences. 
-- **runs/**: used to store output data from src/ (e.g., confusino matrix, performance metrics, trained models, predictions)
+- **runs/**: used to store output data from src/ (e.g., confusion matrix, performance metrics, trained models, predictions)
 
 ## Setup and Installation
 
